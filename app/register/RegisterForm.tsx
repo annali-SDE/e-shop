@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Heading from '@/app/components/Heading';
 import Input from '@/app/components/inputs/Input';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
@@ -12,7 +12,11 @@ import axios from 'axios';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-const RegisterForm = () => {
+interface RegisterFormProps {
+  currentUser: SafeUser | null;
+}
+
+const RegisterForm: React.FC<RegisterFormProps> = ({currentUser}) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const {
 		register,
@@ -23,6 +27,13 @@ const RegisterForm = () => {
 	});
 
 	const router = useRouter();
+
+	useEffect(() => { 
+    if (currentUser) {
+      router.push('/cart');
+      router.refresh();
+    }
+  },[]);
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		setIsLoading(true);
@@ -48,6 +59,10 @@ const RegisterForm = () => {
 			setIsLoading(false);
 		})
 	};
+
+	if (currentUser) {
+    return <p className='text-center'>Logged in. Redirecting...</p>
+  }
 
 	return (
 		<>
