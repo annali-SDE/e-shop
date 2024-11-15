@@ -19,8 +19,10 @@ const HomeBanner = () => {
 					<Image
 						src='/banner-image.png'
 						fill
+						sizes="100%"
 						alt='Banner Iamge'
 						className='object-contain'
+						priority={true}
 					/>
 				</div>
 			</div>

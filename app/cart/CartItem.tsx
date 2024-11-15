@@ -27,6 +27,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
 							src={item.selectedImg.image}
 							alt={item.name}
 							fill
+							sizes="100%"
 							className='object-contain'
 						/>
 					</div>
