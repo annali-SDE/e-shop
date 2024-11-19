@@ -31,7 +31,7 @@ const CheckoutClient = () => {
 				method: 'POST',
 				body: JSON.stringify({
 					items: cartProducts,
-					payment_intent_id: paymentIntent
+					paymentIntentId: paymentIntent
 				}),
 				headers: {
 					'Content-Type': 'application/json'
@@ -54,7 +54,7 @@ const CheckoutClient = () => {
 					toast.error('Error creating payment intent');
 				});
 		}
-	}, [cartProducts, paymentIntent]);
+	},[cartProducts, paymentIntent]);
 
 	const options: StripeElementsOptions = {
 		clientSecret,
