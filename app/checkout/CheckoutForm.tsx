@@ -49,9 +49,9 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
 					handleClearCart();
 					handleSetPaymentSuccess(true);
 					handleSetPaymentIntent(null);
-					setIsLoading(false);
 				}
 			});
+		setIsLoading(false);
 	};
 
 	return (

@@ -8,6 +8,7 @@ import { loadStripe, StripeElementsOptions } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from './CheckoutForm';
 import Button from '../components/Button';
+import axios from 'axios';
 
 const stripePromise = loadStripe(
 	process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY as string
@@ -27,26 +28,18 @@ const CheckoutClient = () => {
 		if (cartProducts) {
 			setIsLoading(true);
 			setError(false);
-			fetch('/api/create-payment-intent', {
-				method: 'POST',
-				body: JSON.stringify({
-					items: cartProducts,
-					paymentIntentId: paymentIntent
-				}),
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			})
+
+			axios
+				.post(
+					'/api/create-payment-intent',
+					{ items: cartProducts },
+					{ headers: { 'Content-Type': 'application/json' } }
+				)
 				.then((res) => {
-					setIsLoading(false);
-					if (res.status === 401) {
-						return router.push('/login');
-					}
-					return res.json();
-				})
-				.then((data) => {
+					const data = res.data;
 					setClientSecret(data.paymentIntent.client_secret);
 					handleSetPaymentIntent(data.paymentIntent.id);
+					setIsLoading(false);
 				})
 				.catch((err) => {
 					setError(true);
@@ -54,7 +47,7 @@ const CheckoutClient = () => {
 					toast.error('Error creating payment intent');
 				});
 		}
-	},[cartProducts, paymentIntent]);
+	}, [cartProducts]);
 
 	const options: StripeElementsOptions = {
 		clientSecret,
@@ -70,6 +63,7 @@ const CheckoutClient = () => {
 
 	return (
 		<div className='w-full'>
+			<p>checkout client</p>
 			{clientSecret && cartProducts && (
 				<Elements options={options} stripe={stripePromise}>
 					<CheckoutForm

@@ -12,12 +12,12 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
 interface LoginFormProps {
-  currentUser: SafeUser | null;
+	currentUser: SafeUser | null;
 }
 
 
-const LoginForm: React.FC<LoginFormProps> = ({currentUser}) => {
-  const [isLoading, setIsLoading] = useState(false);
+const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
+	const [isLoading, setIsLoading] = useState(false);
 	const {
 		register,
 		handleSubmit,
@@ -26,76 +26,78 @@ const LoginForm: React.FC<LoginFormProps> = ({currentUser}) => {
 		defaultValues: { email: '', password: '' }
 	});
 
-  const router = useRouter();
+	const router = useRouter();
 
-  useEffect(() => { 
-    if (currentUser) {
-      router.push('/cart');
-      router.refresh();
-    }
-  },[]);
+	useEffect(() => {
+		if (currentUser) {
+			router.push('/cart');
+			router.refresh();
+		}
+	}, []);
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		setIsLoading(true);
-    signIn('credentials', { ...data, redirect: false }).then((callback) => {
-      setIsLoading(false);
-      if (callback?.ok) {
-        router.push('/cart');
-        router.refresh();
-        toast.success('Logged in');
-      }
-      if (callback?.error) {
-        toast.error(callback.error);
-      }
-     });
-  };
-  
-  if (currentUser) {
-    return <p className='text-center'>Logged in. Redirecting...</p>
-  }
-  return (
-    <>
-    <Heading title='Sign in to E~Shop' />
-    <Button
-      outline
-      label='Continue with Google'
-      icon={AiOutlineGoogle}
-      onClick={() => {signIn('google')}}
-    />
-    <div className='relative flex items-center w-full'>
-      <div className='flex-grow border-t border-slate-300'></div>
-      <span className='flex-shrink mx-4 text-slate-500'>OR</span>
-      <div className='flex-grow border-t border-slate-300'></div>
-    </div>
-    <Input
-      id='email'
-      label='Email'
-      disabled={isLoading}
-      register={register}
-      errors={errors}
-      required
-    />
-    <Input
-      id='password'
-      label='Password'
-      disabled={isLoading}
-      register={register}
-      errors={errors}
-      required
-      type='password'
-    />
-    <Button
-      label={isLoading ? 'Loading...' : 'Sign in'}
-      disabled={isLoading}
-      onClick={handleSubmit(onSubmit)}
-    />
-    <p className='text-sm'>
-      Do not have an account?{' '}
-      <Link className='underline' href='/register'>
-        Sign up
-      </Link>
-    </p>
-  </>
-  )
-}
-export default LoginForm
+		signIn('credentials', { ...data, redirect: false }).then((response) => {
+			setIsLoading(false);
+			if (response?.ok) {
+				router.push('/cart');
+				router.refresh();
+				toast.success('Logged in');
+			}
+			if (response?.error) {
+				toast.error(response.error);
+			}
+		});
+	};
+
+	if (currentUser) {
+		return <p className='text-center'>Logged in. Redirecting...</p>;
+	}
+	return (
+		<>
+			<Heading title='Sign in to E~Shop' />
+			<Button
+				outline
+				label='Continue with Google'
+				icon={AiOutlineGoogle}
+				onClick={() => {
+					signIn('google');
+				}}
+			/>
+			<div className='relative flex items-center w-full'>
+				<div className='flex-grow border-t border-slate-300'></div>
+				<span className='flex-shrink mx-4 text-slate-500'>OR</span>
+				<div className='flex-grow border-t border-slate-300'></div>
+			</div>
+			<Input
+				id='email'
+				label='Email'
+				disabled={isLoading}
+				register={register}
+				errors={errors}
+				required
+			/>
+			<Input
+				id='password'
+				label='Password'
+				disabled={isLoading}
+				register={register}
+				errors={errors}
+				required
+				type='password'
+			/>
+			<Button
+				label={isLoading ? 'Loading...' : 'Sign in'}
+				disabled={isLoading}
+				onClick={handleSubmit(onSubmit)}
+			/>
+			<p className='text-sm'>
+				Do not have an account?{' '}
+				<Link className='underline' href='/register'>
+					Sign up
+				</Link>
+			</p>
+		</>
+	);
+};
+export default LoginForm;
