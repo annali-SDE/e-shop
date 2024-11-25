@@ -12,9 +12,7 @@ const calculateOrderAmount = (items: CartProductType[]) => {
 	const totalPrice = items.reduce((acc, item) => {
 		return acc + item.price * item.quantity;
 	}, 0);
-	// TODO: price not accurate
-	const price: any = Math.floor(totalPrice);
-	return price;
+	return totalPrice;
 };
 
 export async function POST(req: Request) {
@@ -29,7 +27,7 @@ export async function POST(req: Request) {
 	}
 	const body = await req.json();
 	const { items, payment_intent_id } = body;
-	const total = calculateOrderAmount(items)*100;
+	const total = Math.round(calculateOrderAmount(items) *100);
 	const orderData = {
 		user: { connect: { id: currentUser.id } },
 		amount: total,
