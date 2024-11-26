@@ -19,6 +19,8 @@ import {
 	getDownloadURL
 } from 'firebase/storage';
 import firebaseApp from '@/libs/firebase';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export type ImageType = {
 	color: string;
@@ -33,6 +35,7 @@ export type UploadedImageType = {
 };
 
 const AddProductForm = () => {
+	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
 	const [images, setImages] = useState<ImageType[] | null>();
 	const [isProductCreated, setIsProductCreated] = useState(false);
@@ -142,6 +145,19 @@ const AddProductForm = () => {
 		};
 		await handleImageUploads();
 		const productData = { ...data, images: uploadedImages };
+		axios
+			.post('/api/products', productData)
+			.then(() => {
+				toast.success('Product added successfully');
+				setIsProductCreated(true);
+				router.refresh();
+			})
+			.catch((error) => {
+				toast.error('Error adding product to db', error);
+			})
+			.finally(() => {
+				setIsLoading(false);
+			});
 	};
 
 	const category = watch('category');
