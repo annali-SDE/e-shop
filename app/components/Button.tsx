@@ -33,6 +33,7 @@ const Button: React.FC<buttonProps> = ({
       ${custom ? custom : ''}`}>
 			{Icon && <Icon size={24} />}
 			{label}
+			<span className='sr-only'>{label}</span>
 		</button>
 	);
 };
