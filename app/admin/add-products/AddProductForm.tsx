@@ -2,13 +2,15 @@
 
 import Heading from '@/app/components/Heading';
 import Input from '@/app/components/inputs/Input';
-import { useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
 import TextArea from '@/app/components/inputs/TextArea';
 import CustomCheckBox from '@/app/components/inputs/CustomCheckBox';
 import { categories } from '@/app/utils/Categories';
 import CategoryInput from '@/app/components/inputs/CategoryInput';
 import { colors } from '@/app/utils/colors';
+import SelectColor from '@/app/components/inputs/SelectColor';
+import Button from '@/app/components/Button';
 
 export type ImageType = {
 	color: string;
@@ -24,6 +26,9 @@ export type UploadedImageType = {
 
 const AddProductForm = () => {
 	const [isLoading, setIsLoading] = useState(false);
+	const [images, setImages] = useState<ImageType[] | null>();
+	const [isProductCreated, setIsProductCreated] = useState(false);
+	console.log('images', images);
 	const {
 		register,
 		handleSubmit,
@@ -43,7 +48,6 @@ const AddProductForm = () => {
 		}
 	});
 
-	const category = watch('category');
 	const setCustomValue = (id: string, value: string) => {
 		setValue(id, value, {
 			shouldValidate: true,
@@ -51,6 +55,42 @@ const AddProductForm = () => {
 			shouldTouch: true
 		});
 	};
+
+	useEffect(() => {
+		setCustomValue('category', 'All');
+	}, [images]);
+
+	useEffect(() => {
+		if (isProductCreated) {
+			reset();
+			setImages(null);
+			setIsProductCreated(false);
+		}
+	}, [isProductCreated]);
+
+	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+		console.log(data);
+	};
+
+	const category = watch('category');
+
+	const addImageToSate = useCallback((value: ImageType) => {
+		setImages((prev) => {
+			if (!prev) return [value];
+			return [...prev, value];
+		});
+	}, []);
+	const removeImageToSate = useCallback((value: ImageType) => {
+		setImages((prev) => {
+			if (prev) {
+				const filteredImages = prev.filter(
+					(item) => item.color !== value.color
+				);
+				return filteredImages;
+			}
+			return prev;
+		});
+	}, []);
 	return (
 		<>
 			<Heading title='Add a Product' center />
@@ -119,8 +159,24 @@ const AddProductForm = () => {
 						your color selection will be ignored
 					</div>
 				</div>
-				<div className='grid, grid-cols-2 gap-3'></div>
+				<div className='grid grid-cols-2 gap-3'>
+					{colors.map((item, index) => {
+						return (
+							<SelectColor
+								key={index}
+								item={item}
+								addImageToSate={addImageToSate}
+								removeImageFromState={removeImageToSate}
+								isProductCreated={isProductCreated}
+							/>
+						);
+					})}
+				</div>
 			</div>
+			<Button
+				label={isLoading ? 'Loading...' : 'Add Product'}
+				onClick={handleSubmit(onSubmit)}
+			/>
 		</>
 	);
 };
