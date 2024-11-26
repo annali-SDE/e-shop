@@ -1,9 +1,6 @@
 'use client';
 
 import { IconType } from 'react-icons';
-import { Icon } from '@mui/material';
-
-// import { Icon } from 'react-icons';
 
 interface buttonProps {
 	label: string;
@@ -11,7 +8,7 @@ interface buttonProps {
 	outline?: boolean;
 	small?: boolean;
 	custom?: string;
-	icon?: Icon;
+	icon?: IconType;
 	onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
