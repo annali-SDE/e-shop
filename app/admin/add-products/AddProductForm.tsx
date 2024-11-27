@@ -72,7 +72,6 @@ const AddProductForm = () => {
 	}, [isProductCreated]);
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-		console.log('product data', data);
 		setIsLoading(true);
 		let uploadedImages: UploadedImageType[] = [];
 		if (!data.category) {
@@ -85,8 +84,6 @@ const AddProductForm = () => {
 				'Please select at least one color and upload an image'
 			);
 		}
-		console.log('data.images', data.images);
-		// setIsLoading(false);
 		const handleImageUploads = async () => {
 			toast('Uploading image..., please wait...');
 			try {
