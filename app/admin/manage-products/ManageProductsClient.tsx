@@ -4,7 +4,7 @@ import { Product } from '@prisma/client';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { formatPrice } from '@/app/utils/formatPrice';
 import Heading from '@/app/components/Heading';
-import InStockStatus from '@/app/components/InStockStatus';
+import Status from '@/app/components/Status';
 import {
 	MdCached,
 	MdClose,
@@ -81,15 +81,15 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
 				return (
 					<div className='h-full flex items-center justify-center'>
 						{params.row.inStock === true ? (
-							<InStockStatus className='bg-teal-200 text-teal-700'>
+							<Status className='bg-teal-200 text-teal-700 w-full'>
 								in stock
 								<MdDone size={15} />
-							</InStockStatus>
+							</Status>
 						) : (
-							<InStockStatus className='bg-rose-200 text-rose-700'>
+							<Status className='bg-rose-200 text-rose-700 w-full'>
 								in stock
 								<MdClose size={15} />
-							</InStockStatus>
+							</Status>
 						)}
 					</div>
 				);

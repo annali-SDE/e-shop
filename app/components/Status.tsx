@@ -1,6 +1,6 @@
 import { twMerge } from 'tailwind-merge';
 
-const InStockStatus = ({
+const Status = ({
 	className,
 	children
 }: React.PropsWithChildren & { className?: string }) => (
@@ -12,4 +12,4 @@ const InStockStatus = ({
 		{children}
 	</div>
 );
-export default InStockStatus;
+export default Status;
