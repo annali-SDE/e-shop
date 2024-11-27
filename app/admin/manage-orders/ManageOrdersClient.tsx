@@ -143,7 +143,7 @@ const ManageOrdersClient = (props: ManageOrdersClientProps) => {
 						<ActionBtn
 							icon={MdRemoveRedEye}
 							onClick={() => {
-								router.push(`orders/${params.row.id}`);
+								router.push(`/order/${params.row.id}`);
 							}}
 							label='Preview'
 						/>
