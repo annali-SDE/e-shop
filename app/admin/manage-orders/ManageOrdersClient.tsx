@@ -98,12 +98,12 @@ const ManageOrdersClient = (props: ManageOrdersClientProps) => {
 							pending
 							<MdAccessTimeFilled size={15} />
 						</Status>
-					) : params.row.deliverStatus === 'dispatched' ? (
+					) : params.row.deliveryStatus === 'dispatched' ? (
 						<Status className='bg-purple-200 text-purple-700 w-full'>
 							dispatched
-							<MdDone size={15} />
+							<MdDeliveryDining size={15} />
 						</Status>
-					) : params.row.deliverStatus === 'delieved' ? (
+					) : params.row.deliveryStatus === 'delivered' ? (
 						<Status className='bg-green-200 text-green-700 w-full'>
 							delivered
 							<MdDone size={15} />
