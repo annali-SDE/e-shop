@@ -77,7 +77,6 @@ const OrderDetails: React.FC<OrderDetailProps> = ({ order }) => {
 					order.products.map((item) => {
 						return (
 							<>
-								<hr />
 								<OrderItem key={item.id} item={item} />
 							</>
 						);
