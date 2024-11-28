@@ -17,7 +17,7 @@ export default async function getOrderByUserId(params: IOrderParams) {
 			orderBy: { createdAt: 'desc' }
 		});
 		if (!orders) {
-			throw new Error('Orders are not founded');
+			throw new Error('Orders are not found');
 		}
 		return orders;
 	} catch (error: any) {

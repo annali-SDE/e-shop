@@ -11,7 +11,7 @@ const Order = async ({ params }: { params: IPrams }) => {
 	const order = await getOrderById({ orderId: params.orderId });
 
 	if (!order) {
-		return <NullData title='No Order Founded' />;
+		return <NullData title='No Order found' />;
 	}
 
 	return (

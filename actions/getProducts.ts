@@ -1,11 +1,11 @@
 import prisma from '@/libs/prisma';
 
-export interface IProductParams {
+export interface IProductsParams {
 	category?: string | null;
 	searchTerm?: string | null;
 }
 
-export default async function getProducts(params: IProductParams) {
+export default async function getProducts(params: IProductsParams) {
 	try {
 		const { category, searchTerm } = params;
 		let searchString = searchTerm;

@@ -11,7 +11,7 @@ const Orders = async () => {
 	}
 	const orders = await getOrderByUserId({ userId: currentUser.id });
 	if (!orders) {
-		return <NullData title='Orders are not founded' />;
+		return <NullData title='Orders are not found' />;
 	}
 	return (
 		<div className='pt-8'>
