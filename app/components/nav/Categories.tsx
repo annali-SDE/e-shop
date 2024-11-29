@@ -1,7 +1,7 @@
 'use client';
 
 import Container from '../Container';
-import { categories } from '@/app/utils/categories';
+import { categories } from '@/app/utils/categorieLists';
 import Category from './Category';
 import { usePathname, useSearchParams } from 'next/navigation';
 

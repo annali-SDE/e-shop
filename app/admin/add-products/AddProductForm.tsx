@@ -6,7 +6,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
 import TextArea from '@/app/components/inputs/TextArea';
 import CustomCheckBox from '@/app/components/inputs/CustomCheckBox';
-import { categories } from '@/app/utils/categories';
+import { categories } from '@/app/utils/categorieLists';
 import CategoryInput from '@/app/components/inputs/CategoryInput';
 import { colors } from '@/app/utils/colors';
 import SelectColor from '@/app/components/inputs/SelectColor';
