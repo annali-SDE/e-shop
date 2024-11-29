@@ -6,7 +6,7 @@ import {
 
 interface SetColorProps {
 	images: SelectedImgType[];
-	cartProduct: CartProduct;
+	cartProduct: CartProductType;
 	handleColorSelect: (color: SelectedImgType) => void;
 }
 
@@ -28,7 +28,8 @@ const SetColor: React.FC<SetColorProps> = ({
 									cartProduct.selectedImg.color === image.color
 										? 'border-[1.5px]'
 										: 'border-none'
-								}`} onClick={()=> handleColorSelect(image)}>
+								}`}
+								onClick={() => handleColorSelect(image)}>
 								<div
 									style={{ background: image.colorCode }}
 									className='h-5 w-5 rounded-full border-[1.2px] border-slate-300 cursor-pointer'></div>
