@@ -1,14 +1,16 @@
 'use client';
 
+import { CartProductType } from '@/app/product/[productId]/ProductDetail';
+
 interface SetQuantityProps {
 	cartProduct: CartProductType;
 	cartCounter?: boolean;
 	handleQuantityIncrease: () => void;
 	handleQuantityDecrease: () => void;
-	// handleQuantity: (value: number) => void;
 }
 
-const btnStyles = 'border-[1.2px] border-slate-300 px-2 rounded disabled:cursor-not-allowed';
+const btnStyles =
+	'border-[1.2px] border-slate-300 px-2 rounded disabled:cursor-not-allowed';
 
 const SetQuantity: React.FC<SetQuantityProps> = ({
 	cartProduct,
