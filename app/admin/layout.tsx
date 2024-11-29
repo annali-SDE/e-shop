@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import AdminNav from '../components/admin/AdminNav';
 
-export const metedata: Metadata = {
+export const metadata: Metadata = {
 	title: 'E-Shop Admin',
 	description: 'E-Shop Admin Dashboard'
 };
