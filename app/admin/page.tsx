@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import getProducts from '@/actions/getProducts';
 import getOrders from '@/actions/getOrders';
 import getUsers from '@/actions/getUsers';

@@ -11,12 +11,13 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { SafeUser } from '@/types';
 
 interface RegisterFormProps {
-  currentUser: SafeUser | null;
+	currentUser: SafeUser | null;
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({currentUser}) => {
+const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const {
 		register,
@@ -28,41 +29,45 @@ const RegisterForm: React.FC<RegisterFormProps> = ({currentUser}) => {
 
 	const router = useRouter();
 
-	useEffect(() => { 
-    if (currentUser) {
-      router.push('/cart');
-      router.refresh();
-    }
-  },[]);
+	useEffect(() => {
+		if (currentUser) {
+			router.push('/cart');
+			router.refresh();
+		}
+	}, []);
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		setIsLoading(true);
-		axios.post('/api/register', data).then(() => {
-			toast.success('Account created successfully');
-			signIn('credentials', {
-				email: data.email,
-				password: data.password,
-				redirect: false
-			}).then((callback) => {
-				if (callback?.ok) {
-					router.push('/cart');
-					router.refresh();
-					toast.success('Logged in');
-				}
-				if (callback?.error) {
-					toast.error(callback.error);
-				}
+		axios
+			.post('/api/register', data)
+			.then(() => {
+				toast.success('Account created successfully');
+				signIn('credentials', {
+					email: data.email,
+					password: data.password,
+					redirect: false
+				}).then((callback) => {
+					if (callback?.ok) {
+						router.push('/cart');
+						router.refresh();
+						toast.success('Logged in');
+					}
+					if (callback?.error) {
+						toast.error(callback.error);
+					}
+				});
+			})
+			.catch(() => {
+				toast.error('Something went wrong. Please try again.');
+			})
+			.finally(() => {
+				setIsLoading(false);
 			});
-		}).catch(() => {
-			toast.error("Something went wrong. Please try again.");
-		}).finally(() => {
-			setIsLoading(false);
-		})
 	};
 
 	if (currentUser) {
-    return <p className='text-center'>Logged in. Redirecting...</p>
-  }
+		return <p className='text-center'>Logged in. Redirecting...</p>;
+	}
 
 	return (
 		<>
@@ -71,7 +76,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({currentUser}) => {
 				outline
 				label='Sign up with Google'
 				icon={AiOutlineGoogle}
-				onClick={() => {signIn('google')}}
+				onClick={() => {
+					signIn('google');
+				}}
 			/>
 			<div className='relative flex items-center w-full'>
 				<div className='flex-grow border-t border-slate-300'></div>

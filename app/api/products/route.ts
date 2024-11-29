@@ -1,3 +1,4 @@
+'use client';
 import prisma from '@/libs/prisma';
 import { NextResponse } from 'next/server';
 import { getCurrentUser } from '@/actions/getCurrentUser';
