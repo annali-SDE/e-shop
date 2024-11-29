@@ -21,7 +21,9 @@ export async function POST(request: Request) {
 		return review.userId === currentUser.id;
 	});
 
-	if (userReview || !deliveredOrder) return null;
+	if (userReview || !deliveredOrder) {
+		return NextResponse.error();
+	}
 
 	const review = await prisma.review.create({
 		data: {
