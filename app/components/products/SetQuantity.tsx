@@ -1,6 +1,6 @@
 'use client';
 
-import { CartProductType } from '@/app/product/[productId]/ProductDetail';
+import { CartProductType } from '@prisma/client';
 
 interface SetQuantityProps {
 	cartCounter?: boolean;
