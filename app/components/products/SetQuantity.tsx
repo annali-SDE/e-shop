@@ -3,8 +3,8 @@
 import { CartProductType } from '@/app/product/[productId]/ProductDetail';
 
 interface SetQuantityProps {
-	cartProduct: CartProductType;
 	cartCounter?: boolean;
+	cartProduct: CartProductType;
 	handleQuantityIncrease: () => void;
 	handleQuantityDecrease: () => void;
 }
